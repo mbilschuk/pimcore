@@ -18,7 +18,7 @@ namespace Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model;
 use Pimcore\Model\Element;
 
-class Layout
+class Layout implements Model\DataObject\ClassDefinition\Data\VarExporterInterface
 {
     use Model\DataObject\ClassDefinition\Helper\VarExport, Element\ChildsCompatibilityTrait;
 
@@ -100,6 +100,15 @@ class Layout
     public $permissions;
 
     /**
+     * @deprecated will be removed in Pimcore 11. Use getChildren() or $this->children instead.
+     *
+     * @internal
+     *
+     * @var array
+     */
+    public $childs;
+
+    /**
      * @internal
      *
      * @var array
@@ -112,6 +121,11 @@ class Layout
      * @var bool
      */
     public $locked = false;
+
+    public function __construct()
+    {
+        $this->childs = & $this->children;
+    }
 
     /**
      * @return string
@@ -433,5 +447,13 @@ class Layout
         $this->collapsible = $this->getCollapsed() || $this->getCollapsible();
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBlockedVarsForExport(): array
+    {
+        return ['blockedVarsForExport', 'childs'];
     }
 }
