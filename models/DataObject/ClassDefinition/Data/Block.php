@@ -100,6 +100,15 @@ class Block extends Data implements CustomResourcePersistingInterface, ResourceP
     public $styleElement = '';
 
     /**
+     * @deprecated will be removed in Pimcore 11. Use getChildren() or $this->children instead.
+     *
+     * @internal
+     *
+     * @var array
+     */
+    public $childs;
+
+    /**
      * @internal
      *
      * @var array
@@ -128,6 +137,11 @@ class Block extends Data implements CustomResourcePersistingInterface, ResourceP
      * @var array|null
      */
     public $fieldDefinitionsCache;
+
+    public function __construct()
+    {
+        $this->childs = &$this->children;
+    }
 
     /**
      * @see ResourcePersistenceAwareInterface::getDataForResource

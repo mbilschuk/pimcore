@@ -40,6 +40,15 @@ class Localizedfields extends Data implements CustomResourcePersistingInterface,
     public $fieldtype = 'localizedfields';
 
     /**
+     * @deprecated will be removed in Pimcore 11. Use getChildren() or $this->children instead.
+     *
+     * @internal
+     *
+     * @var array
+     */
+    public $childs;
+
+    /**
      * @internal
      *
      * @var array
@@ -152,6 +161,11 @@ class Localizedfields extends Data implements CustomResourcePersistingInterface,
      * @var array|null
      */
     public $permissionEdit;
+
+    public function __construct()
+    {
+        $this->childs = &$this->children;
+    }
 
     /**
      * @see Data::getDataForEditmode

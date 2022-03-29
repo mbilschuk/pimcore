@@ -38,6 +38,15 @@ class Classificationstore extends Data implements CustomResourcePersistingInterf
     public $fieldtype = 'classificationstore';
 
     /**
+     * @deprecated will be removed in Pimcore 11. Use getChildren() or $this->children instead.
+     *
+     * @internal
+     *
+     * @var array
+     */
+    public $childs;
+
+    /**
      * @internal
      *
      * @var array
@@ -178,6 +187,12 @@ class Classificationstore extends Data implements CustomResourcePersistingInterf
      * @var array
      */
     public $permissionEdit;
+
+
+    public function __construct()
+    {
+        $this->childs = &$this->children;
+    }
 
     /**
      * @see Data::getDataForEditmode
