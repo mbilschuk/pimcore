@@ -1174,6 +1174,7 @@ class Localizedfields extends Data implements CustomResourcePersistingInterface,
             'blockedVarsForExport',
             'permissionView',
             'permissionEdit',
+            'childs'
         ];
 
         foreach ($blockedVars as $blockedVar) {
