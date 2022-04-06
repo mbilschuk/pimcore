@@ -456,4 +456,14 @@ class Layout implements Model\DataObject\ClassDefinition\Data\VarExporterInterfa
     {
         return ['blockedVarsForExport', 'childs'];
     }
+
+    public function __sleep(): array
+    {
+        $vars = get_object_vars($this);
+        foreach ($this->getBlockedVarsForExport() as $blockedVar) {
+            unset($vars[$blockedVar]);
+        }
+
+        return array_keys($vars);
+    }
 }
