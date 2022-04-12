@@ -106,7 +106,7 @@ class Layout implements Model\DataObject\ClassDefinition\Data\VarExporterInterfa
      *
      * @var array
      */
-    public $childs;
+    public $childs = [];
 
     /**
      * @internal
@@ -124,7 +124,9 @@ class Layout implements Model\DataObject\ClassDefinition\Data\VarExporterInterfa
 
     public function __construct()
     {
-        $this->childs = & $this->children;
+        if (empty($this->childs) && !empty($this->children)) {
+            $this->childs = &$this->children;
+        }
     }
 
     /**

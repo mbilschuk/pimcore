@@ -85,45 +85,4 @@ trait ChildsCompatibilityTrait
 
         throw new \Exception('Method hasChildren was not found');
     }
-
-
-    /**
-     * @param string $name
-     * @deprecated
-     *
-     */
-    public function __get($name)
-    {
-        if ($name === 'childs' && property_exists($this, 'children')) {
-            trigger_deprecation(
-                'pimcore/pimcore',
-                '10.4',
-                'Accessing childs property is deprecated, please use getChildren() instead. It will be removed in Pimcore 11.'
-            );
-
-            return $this->children;
-        }
-
-        trigger_error(sprintf('Undefined property: %s::$%s', __CLASS__, $name), E_USER_NOTICE);
-
-        return null;
-    }
-
-    /**
-     * @param string $name
-     * @param mixed $value
-     * @deprecated
-     *
-     */
-    public function __set($name, $value)
-    {
-        if ($name === 'childs' && property_exists($this, 'children')) {
-            trigger_deprecation(
-                'pimcore/pimcore',
-                '10.4',
-                'Accessing childs property is deprecated, please use setChildren() instead. It will be removed in Pimcore 11.'
-            );
-            $this->children = $value;
-        }
-    }
 }
