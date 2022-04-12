@@ -24,7 +24,7 @@ use Pimcore\Model\Element;
 use Pimcore\Normalizer\NormalizerInterface;
 use Pimcore\Tool;
 
-class Localizedfields extends Data implements CustomResourcePersistingInterface, TypeDeclarationSupportInterface, NormalizerInterface, DataContainerAwareInterface, IdRewriterInterface, PreGetDataInterface
+class Localizedfields extends Data implements CustomResourcePersistingInterface, TypeDeclarationSupportInterface, NormalizerInterface, DataContainerAwareInterface, IdRewriterInterface, PreGetDataInterface, VarExporterInterface
 {
     use Element\ChildsCompatibilityTrait;
     use Layout\Traits\LabelTrait;
@@ -164,7 +164,7 @@ class Localizedfields extends Data implements CustomResourcePersistingInterface,
 
     public function __construct()
     {
-        $this->childs = &$this->children;
+        $this->childs = & $this->children;
     }
 
     /**
@@ -1165,10 +1165,9 @@ class Localizedfields extends Data implements CustomResourcePersistingInterface,
     /**
      * @return array
      */
-    public function __sleep()
+    public function getBlockedVarsForExport(): array
     {
-        $vars = get_object_vars($this);
-        $blockedVars = [
+        return [
             'fieldDefinitionsCache',
             'referencedFields',
             'blockedVarsForExport',
@@ -1176,6 +1175,15 @@ class Localizedfields extends Data implements CustomResourcePersistingInterface,
             'permissionEdit',
             'childs'
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public function __sleep()
+    {
+        $vars = get_object_vars($this);
+        $blockedVars = $this->getBlockedVarsForExport();
 
         foreach ($blockedVars as $blockedVar) {
             unset($vars[$blockedVar]);
