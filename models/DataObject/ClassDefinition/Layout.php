@@ -124,9 +124,7 @@ class Layout implements Model\DataObject\ClassDefinition\Data\VarExporterInterfa
 
     public function __construct()
     {
-        if (empty($this->childs) && !empty($this->children)) {
-            $this->childs = &$this->children;
-        }
+        $this->childs = &$this->children;
     }
 
     /**
